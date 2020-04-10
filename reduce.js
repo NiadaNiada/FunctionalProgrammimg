@@ -15,10 +15,7 @@ console.log(concat(arrayOne, arrayTwo));
 
 const filter = (array, filterFunction) => {
     return array.reduce((accum, curVal) => {
-        if (filterFunction(curVal)) {
-            return [...accum, curVal];
-        }
-        return accum;
+        return (filterFunction(curVal)) ? [...accum, curVal] : accum;
     }, []);
 };
 
@@ -29,10 +26,7 @@ const find = (array, findFunc) => {
         if (accum !== undefined) {
             return accum;
         }
-        if (findFunc(curVal)) {
-            return curVal;
-        }
-        return accum;
+        return (findFunc(curVal)) ? curVal : accum;
     }, undefined);
 };
 
@@ -40,10 +34,7 @@ console.log(find(arrayOne, even));
 
 const findIndex = (array, condition) => {
     return array.reduce((accum, curVal, index) => {
-        if (accum < 0 && condition(curVal)) {
-            return index;
-        }
-        return accum;
+        return (accum === -1 && condition(curVal)) ? index : accum;
     }, -1);
 };
 
@@ -51,11 +42,7 @@ console.log(findIndex(arrayTwo, even));
 
 const includes = (array, element) => {
     return array.reduce((accum, curVal) => {
-        console.log(accum, curVal);
-        if (curVal === element) {
-            return true;
-        }
-        return accum;
+        return (curVal === element) ? true : accum;
     }, false);
 };
 
@@ -63,10 +50,7 @@ console.log(includes(arrayOne, 3));
 
 const indexOf = (array, element) => {
     return array.reduce((accum, curVal, index) => {
-        if (accum < 0 && curVal === element) {
-            return index;
-        }
-        return accum;
+        return (accum === -1 && curVal === element) ? index : accum;
     }, -1);
 };
 
@@ -74,7 +58,6 @@ console.log(indexOf(arrayOne, 3));
 
 const map = (array, mapFunction) => {
     return array.reduce((accum, curVal) => {
-        console.log(accum, curVal);
         return [...accum, mapFunction(curVal)];
     }, []);
 };
@@ -84,7 +67,6 @@ console.log(map(arrayTwo, item => item / 2));
 const reverse = array => {
     return array.reduce((accum, curVal, index) => {
         accum[array.length - index - 1] = curVal;
-        console.log(curVal);
         return accum;
     }, []);
 };
@@ -98,10 +80,7 @@ console.log(reverse(arrayOne));
 
 const some = (array, condition) => {
     return array.reduce((accum, curVal) => {
-        if (condition(curVal)) {
-            return true;
-        }
-        return accum;
+        return (condition(curVal)) ? true : accum;
     }, false);
 };
 
@@ -109,12 +88,10 @@ console.log(some(arrayOne, even));
 
 const every = (array, condition) => {
     return array.reduce((accum, curVal) => {
-        if (accum) {
-            return condition(curVal);
-        }
-        return accum;
+        return (accum) ? condition(curVal) : accum;
     }, true);
 };
 
 console.log(every(arrayTwo, even));
 console.log(every(arrayOne, even));
+
